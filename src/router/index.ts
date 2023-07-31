@@ -10,6 +10,9 @@ import Card from "../views/CardView.vue";
 import Blank from "../views/BlankView.vue";
 import NotFound from "../views/NotFound.vue";
 
+import ProductList from "../views/ProductList.vue";
+import ProductAdd from "../views/ProductAdd.vue";
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -21,6 +24,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+  },
+  {
+    path: '/product_list',
+    name: 'ProductList',
+    component: ProductList
+  },
+  {
+    path: '/product_add',
+    name: 'ProductAdd',
+    component: ProductAdd
   },
   {
     path: "/forms",

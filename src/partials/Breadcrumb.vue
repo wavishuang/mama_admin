@@ -2,7 +2,7 @@
   <nav class="text-sm font-semibold mb-6" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex">
       <li class="flex items-center text-purple">
-        <a href="/dashboard" class="text-gray-500">Dashboard</a>
+        <a href="/dashboard" class="text-gray-500">首頁</a>
         <svg
           class="fill-current w-3 h-3 mx-3 text-blue-600"
           xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@
           />
         </svg>
       </li>
-      <li :key="index" class="flex items-center">
+      <li class="flex items-center">
         <a :href="'/' + breadcrumb" class="text-gray-600">{{
           breadcrumbName
         }}</a>
@@ -25,6 +25,13 @@
 import { defineProps, computed } from 'vue'
 const props = defineProps<{ breadcrumb: string }>()
 const breadcrumbName = computed(() => {
-  return props.breadcrumb.toUpperCase()
+  switch(props.breadcrumb) {
+    case 'product_list':
+      return '商品列表'
+    case 'product_add':
+      return '新增商品'
+    default:
+      return props.breadcrumb.toUpperCase()
+  }
 })
 </script>
