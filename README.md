@@ -2,9 +2,6 @@
 
 Dashboard starter template built Vue 3, Tailwind CSS and TypeScript.
 
-![Dashboard](./dashboard.png)
-![Dashboard](./dashboard2.png)
-
 ## Usage
 
 ```bash
