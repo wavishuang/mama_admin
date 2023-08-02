@@ -11,11 +11,11 @@ export function useImgUpload() {
     }
   }
 
-  const del_imgs = () => {
+  const deleteImages = () => {
     if(imagePreviews.value.length) imagePreviews.value = []
   }
 
   return {
-    file, preview, imagePreviews, del_imgs
+    file, preview, imagePreviews, deleteImages
   }
 }

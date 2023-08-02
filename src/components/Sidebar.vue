@@ -66,7 +66,7 @@
           Examples
         </p>
 
-        <!-- Product List -->
+        <!-- 商品列表 -->
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'ProductList' ? activeClass : inactiveClass]"
@@ -96,7 +96,7 @@
             />
           </svg>
 
-          <span class="mx-4">Product List</span>
+          <span class="mx-4">商品列表</span>
         </router-link>
 
         <!-- UI Elements -->
