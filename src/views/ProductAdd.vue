@@ -119,8 +119,20 @@
 /**
  * imports
  */
-  import { ref, reactive } from 'vue'
+  import { ref, reactive, onMounted } from 'vue'
   import Breadcrumb from '../partials/Breadcrumb.vue'
+
+/**
+ * storeUtils
+ */
+  import { useStoreUtils } from '../stores/storeUtils.js'
+
+  const storeUtils = useStoreUtils()
+  storeUtils.setLoading(true)
+
+  onMounted(() => {
+    storeUtils.setLoading(false)
+  })
 
 /**
  * Image Upload
@@ -214,7 +226,7 @@
     Array.from(file.value.files).forEach(f => formData.append('files[]', f))
   
     storeProduct.setProduct(formData).then(res => {
-      // console.log('res:', res)
+      console.log('res:', res)
       isSubmit.value = false  
     })
   }
@@ -235,6 +247,7 @@
   const goBack = () => {
     open.value = true
   }
+
 </script>
 
 <style>

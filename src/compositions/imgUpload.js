@@ -1,7 +1,7 @@
-import { ref } from '@vue/reactivity'
+import { ref } from 'vue'
 
 export function useImgUpload() {
-  const file = ref()
+  const file = ref(null)
   const imagePreviews = ref([])
 
   const preview = (e) => {

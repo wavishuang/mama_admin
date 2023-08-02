@@ -4,6 +4,9 @@ import DashboardLayout from "./components/DashboardLayout.vue";
 import EmptyLayout from "./components/EmptyLayout.vue";
 import "./assets/tailwind.css";
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 import { createPinia } from 'pinia';
 const pinia = createPinia();
 
@@ -18,4 +21,5 @@ app
   .use(router)
   .use(pinia)
   .use(VueApexCharts)
+  .use(ElementPlus)
   .mount("#app");

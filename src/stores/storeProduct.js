@@ -44,7 +44,7 @@ axios.interceptors.response.use(res => {
 //   throw err.response || err
 // })
 
-export const useStoreProduct = defineStore('storeAuth', {
+export const useStoreProduct = defineStore('storeProduct', {
   state: () => {
     return {
       productList: {}

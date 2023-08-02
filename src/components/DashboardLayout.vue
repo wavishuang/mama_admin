@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen bg-gray-200 font-roboto">
+  <div class="flex h-screen bg-gray-200 font-roboto" v-loading="loading">
     <Sidebar />
 
     <div class="flex-1 flex flex-col overflow-hidden">
@@ -16,7 +16,21 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * imports
+ */
 import Sidebar from './Sidebar.vue'
 import Header from './Header.vue'
 import Footer from './Footer.vue'
+
+import { computed } from 'vue'
+
+/**
+ * useStoreUtils
+ */
+import { useStoreUtils } from '../stores/storeUtils.js'
+
+const storeUtils = useStoreUtils()
+const loading = computed(() => storeUtils.loading)
+
 </script>
