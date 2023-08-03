@@ -108,12 +108,6 @@
       </div>
     </div>
   </div>
-
-  <ModalConfirm 
-    v-model="open"
-    @reply="reply"
-    confirmText="您確定要捨棄此次編輯？"
-  />
 </template>
 <script lang="ts" setup>
 /**
@@ -121,6 +115,7 @@
  */
   import { ref, reactive, onMounted } from 'vue'
   import Breadcrumb from '../partials/Breadcrumb.vue'
+  import { ElMessage, ElMessageBox } from 'element-plus'
 
 /**
  * storeUtils
@@ -175,7 +170,7 @@
     let column = ''
     for(const key in product) {
       // console.log(`${key} ==> ${product[key]}`)
-      if(key === 'quantity') continue;
+      if(key === 'quantity') continue
       // console.log(`${key}: ${product[key]}`)
       if(!product[key]) {
         switch(key) {
@@ -211,7 +206,7 @@
 
     if(errorFlag) {
       isSubmit.value = false
-      alert(alertText)
+      ElMessage.error(alertText)
       return false
     }
     // console.log('validate success')
@@ -232,20 +227,17 @@
   }
 
 /**
- * Modal
- */
-  import ModalConfirm from '../components/ModalConfirm.vue'
-  const open = ref(false)
-
-  const reply = value => {
-    if(value) history.go(-1)
-  }
-
-/**
  * 取消：返回”商品列表“
  */
   const goBack = () => {
-    open.value = true
+    ElMessageBox.confirm('您確定要捨棄此次編輯？', '警告', {
+      cancelButtonText: '取消',
+      confirmButtonText: '確定',
+    }).then(() => {
+      history.go(-1)
+    }).catch(() => {
+      console.log('取消')
+    })
   }
 
 </script>
