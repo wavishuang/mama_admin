@@ -32,5 +32,4 @@ import { useStoreUtils } from '../stores/storeUtils.js'
 
 const storeUtils = useStoreUtils()
 const loading = computed(() => storeUtils.loading)
-
 </script>

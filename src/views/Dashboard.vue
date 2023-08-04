@@ -2,7 +2,7 @@
   <div>
     <Breadcrumb breadcrumb="" />
     <!--Banner get you to github repo-->
-    <Banner />
+    <!-- <Banner /> -->
     <div class="mt-4">
       <div class="flex flex-wrap -mx-6">
         <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
@@ -332,26 +332,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import Banner from "../partials/Banner.vue";
-import Breadcrumb from "../partials/Breadcrumb.vue";
-interface User {
-  name: string;
-  email: string;
-  title: string;
-  title2: string;
-  status: string;
-  role: string;
-}
+  import { ref } from "vue"
+  // import Banner from "../partials/Banner.vue"
+  import Breadcrumb from "../partials/Breadcrumb.vue"
+  interface User {
+    name: string;
+    email: string;
+    title: string;
+    title2: string;
+    status: string;
+    role: string;
+  }
 
-const testUser: User = {
-  name: "John Doe",
-  email: "john@example.com",
-  title: "Software Engineer",
-  title2: "Web dev",
-  status: "Active",
-  role: "Owner",
-};
+  const testUser: User = {
+    name: "John Doe",
+    email: "john@example.com",
+    title: "Software Engineer",
+    title2: "Web dev",
+    status: "Active",
+    role: "Owner",
+  }
 
-const users = ref<User[]>([...Array(10).keys()].map(() => testUser));
+  const users = ref<User[]>([...Array(10).keys()].map(() => testUser))
+
+  import axios from 'axios'
+  const userInfo = JSON.parse(localStorage.user)
+  console.log(userInfo, userInfo.access_token)
+  axios.get('https://api.line.me/v2/profile', { 
+      headers: { Authorization: `Bearer ${userInfo.access_token}`}
+    }).then(res => {
+      if(res.status === 200) {
+        localStorage.userProfile = JSON.stringify({
+          name: res.data.displayName,
+          userId: res.data.userId,
+          picture: res.data.pictureUrl
+        })
+      }
+      console.log(res)
+      console.log(res.data.displayName)
+      console.log(res.data.userId)
+    })
 </script>

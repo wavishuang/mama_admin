@@ -4,6 +4,7 @@ import Forms from "../views/Forms.vue";
 import Tables from "../views/Tables.vue";
 import UIElements from "../views/UIElements.vue";
 import Login from "../views/Login.vue";
+import Receive from '../views/Receive.vue';
 import Modal from "../views/Modal.vue";
 import Chart from "../views/ChartView.vue";
 import Card from "../views/CardView.vue";
@@ -18,7 +19,23 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Login",
     component: Login,
-    meta: { layout: "empty" },
+    meta: { 
+      layout: "empty",
+      channelID: 2000288906,
+      channelSecret: '5e59a76aed582ce6be926c082715d811',
+      redirectUrl: 'http://localhost:8080/receive',
+    },
+  },
+  {
+    path: "/receive",
+    name: "Receive",
+    component: Receive,
+    meta: { 
+      layout: "empty",
+      channelID: 2000288906,
+      channelSecret: '5e59a76aed582ce6be926c082715d811',
+      redirectUrl: 'http://localhost:8080/receive',
+    },
   },
   {
     path: "/dashboard",
@@ -77,5 +94,16 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  if(to.name === 'Login' || to.name === 'Receive') {
+    next()
+  } else {
+    if(!localStorage.user) {
+      next({name: 'Login'})
+    }
+    next()
+  }
+})
 
 export default router;

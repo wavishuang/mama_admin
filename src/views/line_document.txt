@@ -1,0 +1,125 @@
+/**
+ * url: https://access.line.me/oauth2/v2.1/authorize
+ * response_type=code 固定
+ * client_id=xxxx 頻道ＩＤ
+ * redirect_uri=http://localhost:8080/receive 重導向網址;AppSetting裡的 callback URL
+ * state=123456789 防止跨站請求，要放不是ＵＲＬ編碼的亂數
+ * scope=openid%20profile 要求全縣的範圍，目前有profile, openid, email
+ * ***** 選填
+ * nonec=helloworld 防止重複攻擊，會回傳值到 IDtoken 解析後的內容
+ * prompt=consent 設定為 consent 後，每次登入都會要你同意權限
+ * max_age=241000 登入有效時間（單位：秒），會反應在 IDtoken 解析後的內容
+ * ui_locales=zh-TW LINE 登入的頁面語言（英文 en-US, 日文 jp-JP ...）
+ * bot_prompt=normal 有加入 chatbot 的話，要在權限列表一起顯示 normal 或是分開顯示 aggressive
+ * 
+ * Content-Type: application/x-www-form-urlencoded
+ * 回傳值（ＪＳＯＮ）：
+ * http://localhost:8080/receive?code=dfaasdfadsfasdfa&state=123456789
+ * 簡報
+ * https://docs.google.com/presentation/d/1WdLtIqgtNXJ0yUwdcfG1OVu2B9lGpIdFEmnfwofpHEg/edit#slide=id.g60b55d691d_1_33
+ * 
+ * STEP 2: 拿 code 換 Access Token
+ * 呼叫 API(POST)
+ * https://api.line.me/oauth2/v2.1/token
+ * HEADER:
+ * Content-Type: application/x-www-form-urlencoded
+ * 參數：
+ * grant_type=authorization_code
+ * code=剛剛回傳回來的code
+ * redirect_uri=跟登入一樣的網址
+ * client_id=頻道ID
+ * client_secret=頻道的密碼
+ * 
+ * 回傳（ＪＳＯＮ）：
+ * access_token: 
+ * token_type:
+ * refresh_token:
+ * expires_in:
+ * scope:
+ * id_token:
+ * 
+ * STEP 3: 解析 id_token
+ * 取 payload
+ * iss: 簽發者
+ * sub: 代表方
+ * aud: 接收者
+ * exp: token 過期時間
+ * iat: token 簽發時間
+ * nonce: 防止重複攻擊在登入連結時的參數
+ * amr: 登入方式
+ *  pwd 帳號密碼登入
+ *  lineqr 用 QRcode 登入
+ *  linesso 用已存在的帳密登入
+ * auth_time:
+ * name:
+ * picture:
+ * 
+ * 簡報 
+ * https://docs.google.com/presentation/d/1AFVuGhPi9J0S60--jcxDB9EnmGG23aQ-SpjLHfwI4C8/edit
+ * 
+ * demo site
+ * GIT:
+ * >git clone github: https://github.com/r3850355/line_login_demo.git
+ * >cd line_login_demo
+ * >npm install
+ * >npm run serve
+ * 打開網址
+ * http://localhost:8080
+ * 
+ * 簡報
+ * https://docs.google.com/presentation/d/1YJndh1_3lMNQsr1O9Fg_Xs0MvXLqPi7BU9AUNXryvbc/edit
+ * 
+ * Verify access token
+ * 功能：
+ * 向 line 端驗證 accessToken 的正確性與所含的資料
+ * 使用時機：
+ * 後端資料庫接收資料時，可以判斷 token 與 channelID 是否正確
+ * 方法：
+ * GET https://api.line.me/oauth2/v2.1/verify?access_token=xxxxx
+ * 
+ *  Refresh access token
+ * 功能：
+ * AccessToken 過期前可以換一個新的 AccessToken 回來 
+ * 使用時機：
+ * 原本的 AccessToken 有效期限到之前去換新的回來，讓使用者不會因為 token 過期被登出
+ * 方法：
+ * POST https://api.line.me/oauth2/v2.1/token
+ * 參數：
+ * grant_type=refresh_token 固定
+ * refresh_token=你的 refresh_token
+ * client_id=你的 channel_id
+ * client_secret=你的 channel_secret
+ * 
+ * Revoke access token
+ * 功能：
+ * 註銷 AccessToken
+ * 使用時機：
+ * 用在登出時，註銷掉 AccessToken
+ * 方法：
+ * POST https://api.line.me/oauth2/v2.1/revoke
+ * 參數：
+ * client_id=你的 channel_id
+ * client_secret=你的 channel_secret
+ * access_token=User的 accessToken
+ * 
+ * Get user profile
+ * 功能：
+ * 拿取使用者的資料
+ * 方法：
+ * GET https://api.line.me/v2/profile
+ * HEADER:
+ * 'Authorization: Bearer {access token}'
+ * 
+ * Get friendship status
+ * 功能：
+ * 查詢使用者與本頻道是否為好友以及是否被加入黑名單
+ * 方法：
+ * GET https://api.line.me/friendship/v1/status
+ * HEADER:
+ * 'Authorization: Bearer {access token}'
+ * 
+ * 簡報
+ * https://docs.google.com/presentation/d/1ciSll4mU6FqNH5kxgGk-ue5whjd67ZKKLkvlmpO6WgE/edit
+ * 
+ * 
+ */
