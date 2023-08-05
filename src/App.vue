@@ -11,7 +11,11 @@ const defaultLayout = 'default'
 
 const { currentRoute } = useRouter()
 
-const layout = computed(
-  () => `${currentRoute.value.meta.layout || defaultLayout}-layout`
-)
+const layout = computed(() => {
+  if(currentRoute.value.meta.layout) {
+    return `${currentRoute.value.meta.layout}-layout`
+  } else {
+    return `${defaultLayout}-layout`
+  }
+})
 </script>

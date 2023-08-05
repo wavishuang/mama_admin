@@ -14,6 +14,9 @@ import NotFound from "../views/NotFound.vue";
 import ProductList from "../views/ProductList.vue";
 import ProductAdd from "../views/ProductAdd.vue";
 
+// web
+import Product from '../views/web/Product.vue';
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -86,6 +89,15 @@ const routes: Array<RouteRecordRaw> = [
     path: "/blank",
     name: "Blank",
     component: Blank,
+  },
+  // web
+  {
+    path: "/product",
+    name: "Product",
+    component: Product,
+    meta: { 
+      layout: "product",
+    },
   },
   { path: "/:pathMatch(.*)*", component: NotFound },
 ];
