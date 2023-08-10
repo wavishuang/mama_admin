@@ -113,7 +113,7 @@
 /**
  * imports
  */
-  import { ref, reactive, onMounted } from 'vue'
+  import { reactive, onMounted } from 'vue'
   import Breadcrumb from '../partials/Breadcrumb.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
 
@@ -123,10 +123,10 @@
   import { useStoreUtils } from '../stores/storeUtils.js'
 
   const storeUtils = useStoreUtils()
-  storeUtils.setLoading(true)
+  storeUtils.loading = true
 
   onMounted(() => {
-    storeUtils.setLoading(false)
+    storeUtils.loading = false
   })
 
 /**
@@ -157,14 +157,14 @@
   const storeProduct = useStoreProduct()
   // storeProduct.getAllProduct()
 
-/**
- * submit
- */
-  const isSubmit = ref(false)
+  /**
+   * submit
+   */
   const handleSubmit = async () => {
-    if(isSubmit.value) return
-    // console.log('is submit')
-    isSubmit.value = true
+    console.log('storeUtils.loading:', storeUtils.loading)
+    if(storeUtils.loading) return
+    console.log('is submit 2')
+    storeUtils.loading = true
     let errorFlag = false
     let alertText = ''
     let column = ''
@@ -205,12 +205,14 @@
     }
 
     if(errorFlag) {
-      isSubmit.value = false
+      storeUtils.loading = false
       ElMessage.error(alertText)
       return false
     }
     // console.log('validate success')
     const formData = new FormData()
+      formData.append('owner', 1);
+
       formData.append('name', product.name || '')
       formData.append('datetime', product.datetime || '')
       formData.append('cost', product.cost || 0)
@@ -220,9 +222,9 @@
       formData.append('description', product.description || '')
     Array.from(file.value.files).forEach(f => formData.append('files[]', f))
   
-    storeProduct.setProduct(formData).then(res => {
+    storeProduct.addProduct(formData).then(res => {
       console.log('res:', res)
-      isSubmit.value = false  
+      storeUtils.loading = false
     })
   }
 

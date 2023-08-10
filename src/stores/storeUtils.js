@@ -6,12 +6,6 @@ export const useStoreUtils = defineStore('storeUtils', {
       loading: false
     }
   },
-  actions: {
-    setLoading(stat, second=0) {
-      this.loading = stat
-      if(stat && second !== 0) {
-        setTimeout(() => this.loading = false, second*1000)
-      }
-    },
-  },
+  getters: {},
+  actions: {}
 })

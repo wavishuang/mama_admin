@@ -17,12 +17,12 @@
 /**
  * imports
  */
-  import { ref, computed, reactive, onMounted } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   // import Breadcrumb from '../../partials/Breadcrumb.vue'
   // import { ElMessage, ElMessageBox } from 'element-plus'
 
   import { useStoreUtils } from '@/stores/storeUtils.js'
-  import { useStoreProduct } from '@/stores/storeProduct.js'
+  // import { useStoreProduct } from '@/stores/storeProduct.js'
 
   const name = ref('W381（冷凍）野生活凍白蝦（8/7結單）')
   const images = ref([
@@ -57,10 +57,10 @@
  * storeUtils
  */
   const storeUtils = useStoreUtils()
-  storeUtils.setLoading(true)
+  storeUtils.loading = true
 
   onMounted(() => {
-    storeUtils.setLoading(false)
+    storeUtils.loading = false
   })
 
 /**

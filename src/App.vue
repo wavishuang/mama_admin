@@ -5,14 +5,18 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
+const route = useRoute()
 const defaultLayout = 'default'
 
 const { currentRoute } = useRouter()
 
 const layout = computed(() => {
-  if(currentRoute.value.meta.layout) {
+  console.log('layout:', route.path, currentRoute.value.meta.layout)
+  if(route.path === '/') {
+    return 'empty-layout'
+  } else if(currentRoute.value.meta.layout) {
     return `${currentRoute.value.meta.layout}-layout`
   } else {
     return `${defaultLayout}-layout`

@@ -173,6 +173,8 @@
 import { ref, computed, watch } from 'vue'
 import { useSidebar } from '@/hooks/useSidebar'
 import { useRoute, useRouter } from 'vue-router'
+import { utils } from '@/utils'
+import { useStoreUser } from '@/stores/storeUser.js'
 
 import SearchInput from '@/components/SearchInput'
 
@@ -183,7 +185,8 @@ const dropdownOpen = ref(false)
 const { isOpen } = useSidebar()
 const notificationOpen = ref(false)
 
-const userInfo = computed(() => localStorage.user && JSON.parse(localStorage.user) || {picture: '', name: ''})
+const storeUser = useStoreUser()
+const userInfo = computed(() => utils.isEmpty(storeUser.user) ? {picture: '', name: ''} : storeUser.user)
 
 const page = router.currentRoute.value.meta.layout
 

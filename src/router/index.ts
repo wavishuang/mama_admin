@@ -24,20 +24,19 @@ const routes: Array<RouteRecordRaw> = [
     component: Login,
     meta: { 
       layout: "empty",
-      channelID: 2000288906,
-      channelSecret: '5e59a76aed582ce6be926c082715d811',
-      redirectUrl: 'http://localhost:8080/receive',
     },
   },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: Login,
+  // },
   {
     path: "/receive",
     name: "Receive",
     component: Receive,
     meta: { 
       layout: "empty",
-      channelID: 2000288906,
-      channelSecret: '5e59a76aed582ce6be926c082715d811',
-      redirectUrl: 'http://localhost:8080/receive',
     },
   },
   {

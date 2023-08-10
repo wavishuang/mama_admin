@@ -6,7 +6,7 @@
       size="large"
       @change="handleChange" />
 
-    <el-button class="btn-shopping w-1/3">
+    <el-button class="flex-1 btn-shopping">
       <el-icon class="mr-2">
         <ShoppingCart />
       </el-icon>
@@ -24,7 +24,7 @@ const handleChange = (value: number) => {
 }
 </script>
 
-<style>
+<style scoped>
 .btn-shopping {
   height: 100%;
   border: 0;

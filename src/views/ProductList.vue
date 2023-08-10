@@ -144,22 +144,22 @@
                   <th
                     class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
                   >
-                    User
+                    商品名稱
                   </th>
                   <th
                     class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
                   >
-                    Role
+                    商品圖片
                   </th>
                   <th
                     class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
                   >
-                    Created at
+                    結單日
                   </th>
                   <th
                     class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
                   >
-                    Status
+                    上架
                   </th>
                   <th
                     class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
@@ -169,22 +169,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(u, index) in paginatedTableData" :key="index">
+                <tr v-for="(u, index) in storeProduct.productList" :key="index">
                   <td
                     class="px-5 py-5 text-sm bg-white border-b border-gray-200"
                   >
                     <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img
-                          class="w-full h-full rounded-full"
-                          :src="u.picture"
-                          alt="profile pic"
-                        />
-                      </div>
-
                       <div class="ml-3">
                         <p class="text-gray-900 whitespace-nowrap">
-                          {{ u.name }}
+                          {{ u.pname }}
                         </p>
                       </div>
                     </div>
@@ -192,13 +184,20 @@
                   <td
                     class="px-5 py-5 text-sm bg-white border-b border-gray-200"
                   >
-                    <p class="text-gray-900 whitespace-nowrap">{{ u.role }}</p>
+                    <div class="flex-shrink-0 w-10 h-10">
+                      <img
+                        class="w-full h-full rounded"
+                        :src="`https://api.cc94178.com/uploads/product/${u.images.split(',')[0]}`"
+                        alt="profile pic"
+                      />
+                    </div>
+                    
                   </td>
                   <td
                     class="px-5 py-5 text-sm bg-white border-b border-gray-200"
                   >
                     <p class="text-gray-900 whitespace-nowrap">
-                      {{ u.created }}
+                      {{ u.cut_off }}
                     </p>
                   </td>
                   <td
@@ -209,9 +208,9 @@
                     >
                       <span
                         aria-hidden
-                        :class="`absolute inset-0 bg-${u.statusColor}-200 opacity-50 rounded-full`"
+                        :class="`absolute inset-0 bg-${u.online ? 'green' : 'red'}-200 opacity-50 rounded-full`"
                       ></span>
-                      <span class="relative">{{ u.status }}</span>
+                      <span class="relative" :class="`text-${u.online ? 'green' : 'red'}-700`">{{ u.online ? '是' : '否' }}</span>
                     </span>
                   </td>
                   <td
@@ -427,10 +426,63 @@
 </template>
 
 <script setup lang="ts">
-import { useTableData } from '../hooks/useTableData'
+import { computed } from 'vue'
+import { useTableData } from '@/hooks/useTableData'
 // const { simpleTableData, paginatedTableData, wideTableData } = useTableData()
 const { paginatedTableData } = useTableData()
-import Breadcrumb from '../partials/Breadcrumb.vue'
+import Breadcrumb from '@/partials/Breadcrumb.vue'
+
+/**
+ * store Utils
+ */
+  import { useStoreUtils } from '@/stores/storeUtils.js'
+  
+  const storeUtils = useStoreUtils()
+  storeUtils.loading = true
+
+/**
+ * store User
+ */
+  import { useStoreUser } from '@/stores/storeUser.js'
+
+  const storeUser = useStoreUser()
+  const user = computed(() => storeUser.user || {})
+
+  console.log(user.value.sub)
+
+  // const userId = storeUser.getUserId(user.sub)
+
+  // const get_user_id = () => {
+  //   if(user.value.sub) {
+  //     let formData = new FormData()
+  //         formData.append('user_sub', user.value.sub)
+      
+  //     storeUser.getUserId(formData).then(res => {
+  //       console.log(res.data)
+  //       storeUtils.loading = false
+  //     })
+  //   }
+  // }
+
+/**
+ * storeProduct
+ */
+  import { useStoreProduct } from '@/stores/storeProduct.js'
+
+  const storeProduct = useStoreProduct()
+
+  const get_all_product = async () => {
+    console.log(storeUser.user.sub)
+    let formData = new FormData()
+        formData.append('owner_id', storeUser.user.sub);
+
+    storeProduct.getAllProduct(formData).then(res => {
+      console.log(res)
+      storeUtils.loading = false
+    })
+  }
+
+  get_all_product()
 
 
 </script>

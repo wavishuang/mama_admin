@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen bg-gray-200 font-roboto" v-loading="loading">
+  <div v-loading="loading" class="flex h-screen bg-gray-200 font-roboto">
     <Sidebar />
 
     <div class="flex-1 flex flex-col overflow-hidden">
@@ -19,17 +19,32 @@
 /**
  * imports
  */
-import Sidebar from './Sidebar.vue'
-import Header from './Header.vue'
-import Footer from './Footer.vue'
+  import Sidebar from './Sidebar.vue'
+  import Header from './Header.vue'
+  import Footer from './Footer.vue'
 
-import { computed } from 'vue'
+  import { computed } from 'vue'
+  import { useRouter } from 'vue-router'
+
+  const router = useRouter()
 
 /**
- * useStoreUtils
+ * store Utils
  */
-import { useStoreUtils } from '../stores/storeUtils.js'
+  import { useStoreUtils } from '@/stores/storeUtils.js'
 
-const storeUtils = useStoreUtils()
-const loading = computed(() => storeUtils.loading)
+  const storeUtils = useStoreUtils()
+  const loading = computed(() => storeUtils.loading)
+
+/**
+ * store User
+ */
+  import { useStoreUser } from '@/stores/storeUser.js'
+  const storeUser = useStoreUser()
+
+  console.log(storeUser.user)
+  if(!storeUser.isLogin()) {
+    localStorage.removeItem('user')
+    router.push('/')
+  }
 </script>

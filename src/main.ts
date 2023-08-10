@@ -1,4 +1,7 @@
-import { createApp } from "vue";
+import { createApp, markRaw } from "vue";
+import App from "./App.vue";
+import router from "./router";
+
 import VueApexCharts from "vue3-apexcharts";
 import DashboardLayout from "./components/DashboardLayout.vue";
 import EmptyLayout from "./components/EmptyLayout.vue";
@@ -14,9 +17,9 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import { createPinia } from 'pinia';
 const pinia = createPinia();
-
-import App from "./App.vue";
-import router from "./router";
+pinia.use(({ store }) => {
+  store.router = markRaw(router)
+})
 
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

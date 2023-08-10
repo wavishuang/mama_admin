@@ -12,6 +12,8 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     // disableHostCheck: true,
+    // historyApiFallback: true,
+    // allowedHosts: 'all',
     static: {
       publicPath: '/',
     },

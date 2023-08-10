@@ -355,21 +355,21 @@
 
   const users = ref<User[]>([...Array(10).keys()].map(() => testUser))
 
-  import axios from 'axios'
-  const userInfo = JSON.parse(localStorage.user)
-  console.log(userInfo, userInfo.access_token)
-  axios.get('https://api.line.me/v2/profile', { 
-      headers: { Authorization: `Bearer ${userInfo.access_token}`}
-    }).then(res => {
-      if(res.status === 200) {
-        localStorage.userProfile = JSON.stringify({
-          name: res.data.displayName,
-          userId: res.data.userId,
-          picture: res.data.pictureUrl
-        })
-      }
-      console.log(res)
-      console.log(res.data.displayName)
-      console.log(res.data.userId)
-    })
+  // import axios from 'axios'
+  // const userInfo = JSON.parse(localStorage.user)
+  // console.log(userInfo, userInfo.access_token)
+  // axios.get('https://api.line.me/v2/profile', { 
+  //   headers: { Authorization: `Bearer ${userInfo.access_token}`}
+  // }).then(res => {
+  //   if(res.status === 200) {
+  //     localStorage.userProfile = JSON.stringify({
+  //       name: res.data.displayName,
+  //       userId: res.data.userId,
+  //       picture: res.data.pictureUrl
+  //     })
+  //   }
+  //   console.log(res)
+  //   console.log(res.data.displayName)
+  //   console.log(res.data.userId)
+  // })
 </script>

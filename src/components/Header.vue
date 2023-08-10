@@ -1,6 +1,6 @@
 <template>
   <header class="flex items-center justify-between px-6 py-2 bg-white border-b-4 border-indigo-600">
-    <div class="flex items-center">
+    <div class="flex items-center flex-1">
       <button
         @click="isOpen = true"
         class="text-gray-500 focus:outline-none lg:hidden"
@@ -10,6 +10,10 @@
         </svg>
       </button>
 
+      <div class="relative mx-4 lg:mx-0 flex-1 text-center">
+        澄品團購
+      </div>
+      <!-- Search
       <div class="relative mx-4 lg:mx-0">
         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
@@ -22,7 +26,7 @@
           type="text"
           placeholder="Search"
         />
-      </div>
+      </div> -->
     </div>
 
     <div class="flex items-center">
@@ -163,7 +167,7 @@
             <button
               type="button"
               class="flex px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-indigo-600 hover:text-white w-full"
-              @click="logout"
+              @click="storeUser.logout()"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -178,23 +182,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue"
-import { useSidebar } from "../hooks/useSidebar"
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const dropdownOpen = ref(false)
-const { isOpen } = useSidebar()
-const notificationOpen = ref(false)
-
-const userInfo = computed(() => localStorage.user && JSON.parse(localStorage.user) || {picture: '', name: ''})
-
 /**
- * Logout
+ * imports
  */
-const logout = () => {
-  localStorage.removeItem('user')
-  router.push('/')
-}
+  import { ref, computed } from 'vue'
+  import { useSidebar } from '../hooks/useSidebar'
+  // import { useRouter } from 'vue-router'
+
+  import { useStoreUser } from '@/stores/storeUser.js'
+  import { utils } from '@/utils'
+
+  // const router = useRouter()
+
+  const dropdownOpen = ref(false)
+  const { isOpen } = useSidebar()
+  const notificationOpen = ref(false)
+
+  const storeUser = useStoreUser()
+  const userInfo = computed(() => utils.isEmpty(storeUser.user) ? {picture: '', name: ''} : storeUser.user)
 </script>

@@ -4,7 +4,7 @@
  * client_id=xxxx 頻道ＩＤ
  * redirect_uri=http://localhost:8080/receive 重導向網址;AppSetting裡的 callback URL
  * state=123456789 防止跨站請求，要放不是ＵＲＬ編碼的亂數
- * scope=openid%20profile 要求全縣的範圍，目前有profile, openid, email
+ * scope=openid%20profile 要求權限的範圍，目前有profile, openid, email
  * ***** 選填
  * nonec=helloworld 防止重複攻擊，會回傳值到 IDtoken 解析後的內容
  * prompt=consent 設定為 consent 後，每次登入都會要你同意權限
