@@ -164,6 +164,20 @@
   /**
    * submit
    */
+  // emoji 轉碼
+  const b64EncodeUnicode = (str) => {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+      return String.fromCharCode('0x' + p1);
+    }))
+  }
+  
+  // emoji 解碼
+  // const b64DecodeUnicode = (str) => {
+  //   return decodeURIComponent(atob(str).split('').map(function(c) {
+  //     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  //   }).join(''))
+  // }
+
   const handleSubmit = async () => {
     // console.log('storeUtils.loading:', storeUtils.loading)
     if(storeUtils.loading) return
@@ -223,7 +237,7 @@
       formData.append('suggestedPrice', product.suggestedPrice || 0)
       formData.append('sellingPrice', product.sellingPrice || 0)
       formData.append('quantity', product.quantity || 0)
-      formData.append('description', product.description.replace(/\n/g, "&lt;br /&gt;") || '')
+      formData.append('description', b64EncodeUnicode(product.description.trim().replace(/\n/g, '<br/>')) || '')
     Array.from(file.value.files).forEach(f => formData.append('files[]', f))
   
     storeProduct.addProduct(formData).then(res => {

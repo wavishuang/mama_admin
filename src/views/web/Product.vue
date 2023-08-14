@@ -22,7 +22,7 @@
 /**
  * imports
  */
-  import { ref, computed, onMounted } from 'vue'
+  import { computed } from 'vue'
   import { useRoute } from 'vue-router'
   // import Breadcrumb from '../../partials/Breadcrumb.vue'
   // import { ElMessage, ElMessageBox } from 'element-plus'
@@ -44,42 +44,22 @@
   storeUtils.loading = true
 
 /**
- * product info
- */
-  const name = ref('W381（冷凍）野生活凍白蝦（8/7結單）')
-  
-
-  const description = computed(() => `❌超市一盒賣您320元
-🦐澄品凍漲價：一盒220元
-
-😊重量:850克
-
-😃規格:60/70
-🔥🔥白蝦優惠一檔‼️
-
-#這裡貿易商直出～保證甜～保證鮮～
-
-重量850克
-
-產地：馬來西亞🇳🇮
-
-🌈一盒的份量很給力💪約有60_70隻！
-✔️現撈 ✔️急速冷凍~每隻彈牙脆口，大海新鮮滋味絕不能錯過!新鮮白蝦，蝦肉彈牙爽口，細緻甘甜，吃得到鮮度與肉的Q彈~頂級品質才有的海鮮享受！簡單川燙 最能吃到白蝦鮮甜，或是川燙冰鎮後 夏季最清爽的海鮮料理~
-💖燒酒蝦/胡椒蝦/川燙/鹽烤/快炒/都很美味喔⋯⋯
-🦐🦐🦐🦐🦐🦐🦐`.replace(/\n/g, "<br />"))
-
-  /**
  * store product
  */
   const imgCdn = VUE_APP_IMG_CDN
   const productId = computed(() => route.params.pid ? parseInt(route.params.pid) : 0)
+  const b64DecodeUnicode = (str) => {
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
+  }
 
   const storeProduct = useStoreProduct()
   const productInfo = computed(() => {
     if(storeProduct.info && !utils.isEmpty(storeProduct.info)) {
       const title = (storeProduct.info.pname && storeProduct.info.pname.length) ? storeProduct.info.pname : ''
       const images = (storeProduct.info.images && storeProduct.info.images.length) ? storeProduct.info.images.split(",") : []
-      const description =(storeProduct.info.description && storeProduct.info.description.length) ? storeProduct.info.description : ''
+      const description =(storeProduct.info.description && storeProduct.info.description.length) ? b64DecodeUnicode(storeProduct.info.description) : ''
 
       return {
         title,
@@ -95,7 +75,6 @@
       description: '',
     }
   })
-
 
   const get_product_detail = async () => {
     // console.log(storeUser.user.sub)
