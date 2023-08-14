@@ -1,15 +1,20 @@
 <template>
   <!-- Breadcrumb -->
   <!-- <Breadcrumb breadcrumb="product_add" /> -->
-  <div class="text-xl">{{ name }}</div>
+  <div class="text-xl">{{ productInfo.title }}</div>
     
   <div class="p-2 w-full">
     <div class="flex flex-col space-y-4 mt-4">
       <div class="py-4 flex flex-wrap bg-white relative">
-        <img v-for="(image, i) in images" :key="i" class="w-full mb-2 rounded object-cover" :src="image">
+        <img 
+          v-for="(image, i) in productInfo.images" 
+          :key="i" 
+          class="w-full mb-2 rounded object-cover" 
+          :src="`${imgCdn}${image}`"
+        />
       </div>
 
-      <div v-html="description"></div>
+      <div v-html="productInfo.description"></div>
     </div>
   </div>
 </template>
@@ -18,21 +23,31 @@
  * imports
  */
   import { ref, computed, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
   // import Breadcrumb from '../../partials/Breadcrumb.vue'
   // import { ElMessage, ElMessageBox } from 'element-plus'
 
   import { useStoreUtils } from '@/stores/storeUtils.js'
-  // import { useStoreProduct } from '@/stores/storeProduct.js'
+  import { useStoreProduct } from '@/stores/storeProduct.js'
+  import { VUE_APP_IMG_CDN } from '@/config/line.js'
+  import { utils } from '@/utils'
 
+/**
+ * use Route
+ */
+  const route = useRoute()
+
+/**
+ * storeUtils
+ */
+  const storeUtils = useStoreUtils()
+  storeUtils.loading = true
+
+/**
+ * product info
+ */
   const name = ref('W381（冷凍）野生活凍白蝦（8/7結單）')
-  const images = ref([
-    'https://api.cc94178.com/uploads/product/720270.jpg',
-    'https://api.cc94178.com/uploads/product/720271.jpg',
-    'https://api.cc94178.com/uploads/product/720272.jpg',
-    'https://api.cc94178.com/uploads/product/720273.jpg',
-    'https://api.cc94178.com/uploads/product/720274.jpg',
-    'https://api.cc94178.com/uploads/product/720276.jpg',
-  ])
+  
 
   const description = computed(() => `❌超市一盒賣您320元
 🦐澄品凍漲價：一盒220元
@@ -53,15 +68,53 @@
 💖燒酒蝦/胡椒蝦/川燙/鹽烤/快炒/都很美味喔⋯⋯
 🦐🦐🦐🦐🦐🦐🦐`.replace(/\n/g, "<br />"))
 
-/**
- * storeUtils
+  /**
+ * store product
  */
-  const storeUtils = useStoreUtils()
-  storeUtils.loading = true
+  const imgCdn = VUE_APP_IMG_CDN
+  const productId = computed(() => route.params.pid ? parseInt(route.params.pid) : 0)
 
-  onMounted(() => {
-    storeUtils.loading = false
+  const storeProduct = useStoreProduct()
+  const productInfo = computed(() => {
+    if(storeProduct.info && !utils.isEmpty(storeProduct.info)) {
+      const title = (storeProduct.info.pname && storeProduct.info.pname.length) ? storeProduct.info.pname : ''
+      const images = (storeProduct.info.images && storeProduct.info.images.length) ? storeProduct.info.images.split(",") : []
+      const description =(storeProduct.info.description && storeProduct.info.description.length) ? storeProduct.info.description : ''
+
+      return {
+        title,
+        images,
+        description,
+      }
+    }
+
+
+    return {
+      title: '',
+      images: [],
+      description: '',
+    }
   })
+
+
+  const get_product_detail = async () => {
+    // console.log(storeUser.user.sub)
+    storeUtils.loading = true
+    let formData = new FormData()
+        formData.append('productId', productId.value)
+
+    storeProduct.getProductDetail(formData).then(res => {
+      console.log('getProductDetail:', res)
+      storeUtils.loading = false
+    })
+  }
+
+  // 取得 “全部“ 商品
+  get_product_detail()
+
+  // onMounted(() => {
+  //   storeUtils.loading = false
+  // })
 
 /**
  * product info

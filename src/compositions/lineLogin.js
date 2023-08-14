@@ -1,10 +1,18 @@
 import axios from 'axios'
-import { useRouter } from 'vue-router'
-import { VUE_APP_LINE_CHANNEL_ID, VUE_APP_LINE_REDIRECT_URL } from '@/config/line.js'
+import Qs from 'qs'
+import jwtDecode from 'jwt-decode'
+
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { VUE_APP_LINE_CHANNEL_ID, VUE_APP_LINE_REDIRECT_URL, VUE_APP_LINE_CHANNEL_SECRET } from '@/config/line.js'
 import { useStoreUser } from '@/stores/storeUser.js'
 
 export function useLineLogin() {
-  
+  const route = useRoute()
+  const router = useRouter()
+  const storeUser = useStoreUser()
+
+  // 登入
   const handleLogin = () => {
     const responseType = 'code' // 固定
     const state = 123456789 // 防止跨站請求，要放不是ＵＲＬ編碼的亂數
@@ -34,10 +42,11 @@ export function useLineLogin() {
     // window.open(URL, '_self') // 轉跳到該網址
   }
 
-  const router = useRouter()
-
-  const storeUser = useStoreUser()
-
+  /**
+   * localStorage.user 存在，驗證access_token是否存活，若存活則直接登入
+   * @param {*} user 
+   * @param {*} routerPath 
+   */
   const verifyLogin = async (user, routerPath) => {
     axios.get(`https://api.line.me/oauth2/v2.1/verify?access_token=${user.access_token}`).then(res => {
       if(res.data && res.data.client_id && res.data.client_id == VUE_APP_LINE_CHANNEL_ID && res.data.expires_in > 0) {
@@ -49,8 +58,54 @@ export function useLineLogin() {
     })
   }
 
+  /**
+   * 取得 user 的 line 資訊
+   */
+  const loading = ref(true)
+  const getLineUserInfo = (routerPath) => {
+    const options = Qs.stringify({ // POST的參數  用Qs是要轉成form-urlencoded 因為LINE不吃JSON格式
+      grant_type: 'authorization_code',
+      code: route.query.code,
+      redirect_uri: VUE_APP_LINE_REDIRECT_URL,
+      client_id: VUE_APP_LINE_CHANNEL_ID,
+      client_secret: VUE_APP_LINE_CHANNEL_SECRET
+    })
+
+    axios.post('https://api.line.me/oauth2/v2.1/token', options, { 
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(res => {
+      const tokenResult = res.data // 回傳的結果
+      // console.log(tokenResult)
+      const idTokenDecode = jwtDecode(res.data.id_token) // 把結果的id_token做解析
+      // console.log(idTokenDecode)
+      if(idTokenDecode && idTokenDecode.name && idTokenDecode.sub) {
+        const user = {
+          access_token: tokenResult.access_token,
+          refresh_token: tokenResult.refresh_token,
+          name: idTokenDecode.name,
+          picture: idTokenDecode.picture,
+          exp: idTokenDecode.exp,
+          sub: idTokenDecode.sub
+        }
+        console.log('decode token: ', user)
+        storeUser.user = {...user}
+        localStorage.setItem('user', JSON.stringify(user))
+        loading.value = false
+        router.push(routerPath)
+      } else {
+        router.push('/')
+      }
+    }).catch(() => {
+      storeUser.user = {}
+      localStorage.removeItem('user')
+      router.push('/')
+    })
+  }
+
   return {
+    handleLogin,
     verifyLogin,
-    handleLogin
+    loading,
+    getLineUserInfo
   }
 }

@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 
-let webUrl = 'https://www.api.cc94178.com'
+let webUrl = 'https://www.api.cc94178.com/index.php'
 
 // if(process.env.NODE_ENV === 'production') {
 //   webUrl = '/'
@@ -23,7 +23,7 @@ module.exports = defineConfig({
       //   // changeOrigin: true
       // },
       '^/Demo/': {
-        target: webUrl + '/index.php',
+        target: webUrl,
         // changeOrigin: true
       },
     },

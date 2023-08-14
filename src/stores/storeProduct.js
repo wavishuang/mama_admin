@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { utils } from '@/utils'
 
 const baseURL = 'https://www.api.cc94178.com'
 
@@ -18,52 +19,85 @@ axios.interceptors.response.use(res => {
   throw err.response || err
 })
 
-// const baseURL = sessionStorage.WEB_URL + 'api'
-// axios.defaults.baseURL = baseURL
-
-// axios.interceptors.request.use(config => {
-//   if (localStorage.tuku && !has(config, 'headers.Authorization')) {
-//     set(config, 'headers.Authorization', 'Bearer ' + localStorage.tuku)
-//   }
-//   return config
-// })
-// axios.interceptors.response.use(res => {
-//   return res.data
-// }, err => {
-//   console.log(err)
-//   // if (err.response && err.response.status >= 400 && err.response.status < 404) {
-//   //   syshooks.next({channel: 'http.error', status: err.response.status})
-//   //   throw err.response || err
-//   // } else  {
-//   //   syshooks.next({channel: 'network.error', status:'404'})
-//   //   return Promise.reject(err);
-//   // }
-//   // if (err.response && err.response.status >= 400) {
-//   //   syshooks.next({channel: 'http.error', status: err.response.status})
-//   // }
-//   throw err.response || err
-// })
-
 export const useStoreProduct = defineStore('storeProduct', {
   state: () => {
     return {
-      productList: []
+      all: [],
+      total: 0,
+      currentPage: 1,
+      pageSize: 10,
+      info: {},
     }
   },
-  getters: {},
+  // getters: {
+  //   productLength() {
+  //     return this.all.length
+  //   }
+  // },
   actions: {
+    // 取得所有商品
     async getAllProduct(form) {
       return axios.post('/Demo/get_all_product', form).then(res => {
-        if(res && res.data && res.data.result) {
-          this.productList = [...res.data.result]
+        if(res && res.data && !utils.isEmpty(res.data.result)) {
+          this.all = [...res.data.result.lists]
+          this.total = res.data.result.total
+          this.pageSize = parseInt(res.data.result.pageSize)
+          this.currentPage = parseInt(res.data.result.currentPage)
         }
-        return res.data;
+        return res.data
       })
     },
-    async addProduct(form) {
-      console.log(form)
-      return axios.post('/Demo/add_product', form).then(res => {
+    // 刪除商品
+    async deleteProduct(form) {
+      return axios.post('/Demo/delete_product', form).then(res => {
+        // console.log(res)
+        if(res && res.data && res.data.code === '0000') {
+          this.all = this.all.filter(item => item.pid != res.data.result.pid)
+        }
+        return res.data
+      })
+    },
+    // 商品上/下架
+    async setProductState(form) {
+      return axios.post('/Demo/online_offline_product', form).then(res => {
         console.log(res)
+        if(res && res.data && res.data.code === '0000') {
+          const index = this.all.findIndex(item => item.pid == res.data.result.pid)
+          this.all[index].online = parseInt(res.data.result.state)
+        }
+        return res.data
+      })
+    },
+    // 新增商品
+    async addProduct(form) {
+      // console.log(form)
+      return axios.post('/Demo/add_product', form).then(res => {
+        // console.log(res)
+        return res
+      })
+    },
+    // 結單
+    async cutOffProduct(form) {
+      return axios.post('/Demo/cut_off_product', form).then(res => {
+        console.log('cut_off_product:', res)
+        if(res && res.data && res.data.code === '0000') {
+          console.log('cut off product success')
+          const index = this.all.findIndex(item => item.pid == res.data.result.pid)
+          this.all[index].is_cut_off = 1
+        }
+        return res
+      })
+    },
+    /**
+     * Web
+     */
+    async getProductDetail(form) {
+      return axios.post('/Demo/get_product_detail', form).then(res => {
+        console.log('get_product_detail:', res)
+        if(res && res.data && res.data.code === '0000' && res.data.result.length > 0) {
+          console.log('get_product_detail success', res.data.result[0])
+          this.info = {...res.data.result[0]}
+        }
         return res
       })
     },

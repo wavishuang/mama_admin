@@ -3,51 +3,8 @@
     <!-- Breadcrumb -->
     <Breadcrumb breadcrumb="product_list" />
 
-    <!-- <div class="mt-4">
-      <h4 class="text-gray-600">Simple Table</h4>
-
-      <div class="mt-6">
-        <div class="my-6 overflow-hidden bg-white rounded-md shadow">
-          <table class="w-full text-left border-collapse">
-            <thead class="border-b">
-              <tr>
-                <th
-                  class="px-5 py-3 text-sm font-medium text-gray-100 uppercase bg-indigo-800"
-                >
-                  City
-                </th>
-                <th
-                  class="px-5 py-3 text-sm font-medium text-gray-100 uppercase bg-indigo-800"
-                >
-                  Total orders
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(i, index) in simpleTableData"
-                :key="index"
-                class="hover:bg-gray-200"
-              >
-                <td class="px-6 py-4 text-lg text-gray-700 border-b">
-                  {{ i.city }}
-                </td>
-                <td class="px-6 py-4 text-gray-500 border-b">
-                  {{ i.totalOrders }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div> -->
-
     <div class="mt-8">
-      <!-- <h4 class="text-gray-600">Table with pagination</h4> -->
-
       <div class="mt-6">
-        <!-- <h2 class="text-xl font-semibold leading-tight text-gray-700">Users</h2> -->
-
         <div class="flex flex-col mt-3 sm:flex-row items-center justify-between">
           <div class="">
             <router-link
@@ -56,11 +13,6 @@
             >
               + 新增商品
             </router-link>
-            <!-- <button
-              class="px-3 py-1 text-sm text-white bg-green-500 rounded-md hover:bg-green-400 focus:outline-none"
-            >
-              
-            </button> -->
           </div>
 
           <div class="flex flex-col mt-3 sm:flex-row">
@@ -74,17 +26,13 @@
                   <option>20</option>
                 </select>
 
-                <div
-                  class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 pointer-events-none"
-                >
+                <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 pointer-events-none">
                   <svg
                     class="w-4 h-4 fill-current"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
-                    <path
-                      d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                    />
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </div>
               </div>
@@ -120,9 +68,7 @@
                   viewBox="0 0 24 24"
                   class="w-4 h-4 text-gray-500 fill-current"
                 >
-                  <path
-                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"
-                  />
+                  <path d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z" />
                 </svg>
               </span>
 
@@ -134,303 +80,106 @@
           </div>
         </div>
 
-        <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-          <div
-            class="inline-block min-w-full overflow-hidden rounded-lg shadow"
-          >
-            <table class="min-w-full leading-normal">
-              <thead>
-                <tr>
-                  <th
-                    class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
-                  >
-                    商品名稱
-                  </th>
-                  <th
-                    class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
-                  >
-                    商品圖片
-                  </th>
-                  <th
-                    class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
-                  >
-                    結單日
-                  </th>
-                  <th
-                    class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
-                  >
-                    上架
-                  </th>
-                  <th
-                    class="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-600 uppercase bg-gray-100 border-b-2 border-gray-200"
-                  >
-                    Settings
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(u, index) in storeProduct.productList" :key="index">
-                  <td
-                    class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                  >
-                    <div class="flex items-center">
-                      <div class="ml-3">
-                        <p class="text-gray-900 whitespace-nowrap">
-                          {{ u.pname }}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td
-                    class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                  >
-                    <div class="flex-shrink-0 w-10 h-10">
-                      <img
-                        class="w-full h-full rounded"
-                        :src="`https://api.cc94178.com/uploads/product/${u.images.split(',')[0]}`"
-                        alt="profile pic"
-                      />
-                    </div>
-                    
-                  </td>
-                  <td
-                    class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                  >
-                    <p class="text-gray-900 whitespace-nowrap">
-                      {{ u.cut_off }}
-                    </p>
-                  </td>
-                  <td
-                    class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                  >
-                    <span
-                      :class="`relative inline-block px-3 py-1 font-semibold text-${u.statusColor}-900 leading-tight`"
-                    >
-                      <span
-                        aria-hidden
-                        :class="`absolute inset-0 bg-${u.online ? 'green' : 'red'}-200 opacity-50 rounded-full`"
-                      ></span>
-                      <span class="relative" :class="`text-${u.online ? 'green' : 'red'}-700`">{{ u.online ? '是' : '否' }}</span>
-                    </span>
-                  </td>
-                  <td
-                    class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                  >
-                    <div class="flex justify-around">
-                      <span class="text-yellow-500 flex justify-center">
-                        <a href="#" class="mx-2 px-2 rounded-md"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-green-700"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                            />
-                            <path
-                              fill-rule="evenodd"
-                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </a>
-                        <form method="POST">
-                          <button class="mx-2 px-2 rounded-md">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-5 w-5 text-red-700"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                          </button>
-                        </form>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div
-              class="flex flex-col items-center px-5 py-5 bg-white border-t xs:flex-row xs:justify-between"
-            >
-              <span class="text-xs text-gray-900 xs:text-sm"
-                >Showing 1 to 4 of 50 Entries</span
-              >
-
-              <div class="inline-flex mt-2 xs:mt-0">
-                <button
-                  class="px-4 py-2 text-sm font-semibold text-gray-800 bg-gray-300 rounded-l hover:bg-gray-400"
+        <el-tabs type="border-card">
+          <el-tab-pane label="全部">
+            <div class="overflow-x-auto">
+              <div class="block w-full overflow-hidden rounded-lg shadow">
+                <!-- :default-sort="{ prop: 'cut_off', order: 'ascending' }" -->
+                <el-table 
+                  :data="storeProduct.all"
+                  style="width: 100%;"
                 >
-                  Prev
-                </button>
-                <button
-                  class="px-4 py-2 text-sm font-semibold text-gray-800 bg-gray-300 rounded-r hover:bg-gray-400"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- <div class="mt-8">
-      <h4 class="text-gray-600">Wide Table</h4>
-
-      <div class="flex flex-col mt-6">
-        <div
-          class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-        >
-          <div
-            class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg"
-          >
-            <table class="min-w-full">
-              <thead>
-                <tr>
-                  <th
-                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
-                  >
-                    Name
-                  </th>
-                  <th
-                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
-                  >
-                    Title
-                  </th>
-                  <th
-                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
-                  >
-                    Status
-                  </th>
-                  <th
-                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
-                  >
-                    Role
-                  </th>
-                  <th
-                    class="px-6 py-3 bg-gray-100 border-b border-gray-200"
-                  ></th>
-                </tr>
-              </thead>
-
-              <tbody class="bg-white">
-                <tr v-for="(u, index) in wideTableData" :key="index">
-                  <td
-                    class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
-                  >
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
+                  <el-table-column fixed prop="pid" label="刪除" width="60">
+                    <template #default="scope">
+                      <el-button link type="danger" size="large" @click="delProduct(scope.row.pid)">&times;</el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="pname" label="商品名稱" width="320" />
+                  <el-table-column prop="images" label="商品圖片">
+                    <template #default="scope">
+                      <div class="flex flex-wrap w-80">
+                      <div class="flex-shrink-0 w-10 h-10" v-for="img in scope.row.images.split(',')" :key="img">
                         <img
-                          class="w-10 h-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt="profile pic"
+                          class="w-full h-full rounded"
+                          :src="`${imgCdn}${img}`" 
                         />
                       </div>
-
-                      <div class="ml-4">
-                        <div
-                          class="text-sm font-medium leading-5 text-gray-900"
-                        >
-                          {{ u.name }}
-                        </div>
-                        <div class="text-sm leading-5 text-gray-500">
-                          {{ u.email }}
-                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </template>
+                  </el-table-column>
+                  <!-- <el-table-column prop="cut_off" sortable label="結單日期 / 時間" width="180" /> -->
+                  <el-table-column prop="cut_off" label="結單日期 / 時間" width="180" />
+                  <el-table-column prop="status" label="狀態" width="80">
+                    <template #default="scope">
+                      <div class="flex flex-wrap">
+                        <el-text :type="scope.row.online == 0 ? 'danger' : scope.row.is_cut_off == 0 ? 'success' : 'info'">
+                          {{ scope.row.online == 0 ? '已下架' : scope.row.is_cut_off == 0 ? '團購中' :'已結單' }}
+                        </el-text>
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="複製連結" width="140">
+                    <template #default="scope">
+                      <el-button 
+                        type="primary" 
+                        size="large" 
+                        @click="copyLink(scope.row.pid)"
+                        :disabled="scope.row.online == 0 || scope.row.is_cut_off == 1" 
+                        plain>複製連結</el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column props="online" fixed="right" label="操作" width="140">
+                    <template #default="scope">
+                      <div class="flex flex-wrap justify-between">
+                        <el-button type="primary" size="small" :disabled="scope.row.online == 0 || scope.row.is_cut_off == 1" @click="cutOffProduct(scope.row.pid)">結單</el-button>
+                        <el-button 
+                          type="success" 
+                          size="small"
+                          class="mb-2" 
+                          v-show="scope.row.online == 0"
+                          :disabled="scope.row.is_cut_off == 1"
+                          @click="setProductState(scope.row.pid, 1)"
+                        >上架</el-button>
+                        <el-button 
+                          type="danger" 
+                          size="small" 
+                          class="mb-2" 
+                          v-show="scope.row.online == 1"
+                          :disabled="scope.row.is_cut_off == 1"
+                          @click="setProductState(scope.row.pid, 0)"
+                        >下架</el-button>
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
 
-                  <td
-                    class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
-                  >
-                    <div class="text-sm leading-5 text-gray-900">
-                      {{ u.title }}
-                    </div>
-                    <div class="text-sm leading-5 text-gray-500">
-                      {{ u.title2 }}
-                    </div>
-                  </td>
-
-                  <td
-                    class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
-                  >
-                    <span
-                      class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-                      >{{ u.status }}</span
-                    >
-                  </td>
-
-                  <td
-                    class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
-                  >
-                    {{ u.role }}
-                  </td>
-
-                  <td
-                    class="px-6 py-4 text-sm font-medium leading-5 text-right border-b border-gray-200 whitespace-nowrap"
-                  >
-                    <div class="flex justify-around">
-                      <span class="text-yellow-500 flex justify-center">
-                        <a href="#" class="mx-2 px-2 rounded-md"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-green-700"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                            />
-                            <path
-                              fill-rule="evenodd"
-                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </a>
-                        <form method="POST">
-                          <button class="mx-2 px-2 rounded-md">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-5 w-5 text-red-700"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                          </button>
-                        </form>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                <div class="flex flex-col items-center px-5 py-5 bg-white border-t xs:flex-row xs:justify-between">
+                  <Pagination 
+                    :total="total" 
+                    :currentPage="currentPage"
+                    @pageSizeChange="pageSizeChange"
+                    @currentPageChange="currentPageChange"
+                  />
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="團購中">團購中</el-tab-pane>
+          <el-tab-pane label="已結單">已結單</el-tab-pane>
+          <el-tab-pane label="下架商品">下架商品</el-tab-pane>
+        </el-tabs>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useTableData } from '@/hooks/useTableData'
-// const { simpleTableData, paginatedTableData, wideTableData } = useTableData()
-const { paginatedTableData } = useTableData()
+import { ref, computed, watch } from 'vue'
 import Breadcrumb from '@/partials/Breadcrumb.vue'
+import Pagination from '@/components/Pagination.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+
+import { VUE_APP_WEB_URL, VUE_APP_IMG_CDN } from '@/config/line.js'
 
 /**
  * store Utils
@@ -446,9 +195,9 @@ import Breadcrumb from '@/partials/Breadcrumb.vue'
   import { useStoreUser } from '@/stores/storeUser.js'
 
   const storeUser = useStoreUser()
-  const user = computed(() => storeUser.user || {})
+  // const user = computed(() => storeUser.user || {})
 
-  console.log(user.value.sub)
+  // console.log(user.value.sub)
 
   // const userId = storeUser.getUserId(user.sub)
 
@@ -465,24 +214,154 @@ import Breadcrumb from '@/partials/Breadcrumb.vue'
   // }
 
 /**
+ * 頁面資訊：
+ * pageSize: 每頁幾筆
+ * currentPage: 目前頁面 
+ */
+  // 每頁幾筆
+  const pageSize = ref(10)
+  const pageSizeChange = val => pageSize.value = val
+
+  // 目前頁面
+  const currentPage = ref(1)
+  const currentPageChange = val => currentPage.value = val
+
+/**
  * storeProduct
  */
   import { useStoreProduct } from '@/stores/storeProduct.js'
-
+  const imgCdn = VUE_APP_IMG_CDN
   const storeProduct = useStoreProduct()
-
+  const total = computed(() => storeProduct.total)
   const get_all_product = async () => {
-    console.log(storeUser.user.sub)
+    // console.log(storeUser.user.sub)
+    storeUtils.loading = true
     let formData = new FormData()
-        formData.append('owner_id', storeUser.user.sub);
+        formData.append('owner_id', storeUser.user.sub)
+        formData.append('page_size', pageSize.value)
+        formData.append('current_page', currentPage.value)
 
-    storeProduct.getAllProduct(formData).then(res => {
-      console.log(res)
+    storeProduct.getAllProduct(formData).then(() => {
       storeUtils.loading = false
     })
   }
 
+  // 取得 “全部“ 商品
   get_all_product()
 
+  watch(() => [pageSize.value, currentPage.value], ([size, page]) => {
+    console.log('size:', size)
+    console.log('page:', page)
+    get_all_product()
+  })
 
+  // 刪除商品
+  const delProduct = pid => {
+    console.log("delProduct:", pid)
+    ElMessageBox.confirm(
+      '刪除商品後，此筆商品的訂單會跟著失效，您確定要刪除此商品?',
+      '刪除商品',
+      {
+        confirmButtonText: '確定刪除',
+        cancelButtonText: '取消',
+        type: 'danger',
+      }
+    ).then(() => {
+      storeUtils.loading = true
+
+      let formData = new FormData()
+          formData.append('pid', pid)
+
+      storeProduct.deleteProduct(formData).then(res => {
+        console.log(res)
+        if(res.code === '0000' && res.result) {
+          console.log('del success')
+        }
+        storeUtils.loading = false
+      })
+    }).catch(() => {
+      console.log('取消刪除')
+    })
+  }
+
+  // 下架商品
+  const setProductState = (pid, state) => {
+    console.log("setProductState:", pid, state)
+    const message = state === 0 ? '下架商品後，此筆商品的訂單會跟著失效，您確定要刪除此商品?' : '商品重新上架'
+    const title = state === 0 ? '下架商品' : '上架商品'
+    ElMessageBox.confirm(
+      message,
+      title,
+      {
+        confirmButtonText: state === 0 ? '確定下架' : '重新上架',
+        cancelButtonText: '取消',
+        type: 'danger',
+      }
+    ).then(() => {
+      storeUtils.loading = true
+
+      let formData = new FormData()
+          formData.append('pid', pid)
+          formData.append('state', state)
+
+      storeProduct.setProductState(formData).then(res => {
+        console.log(res)
+        if(res.code === '0000' && res.result) {
+          console.log('set product state success')
+        }
+        storeUtils.loading = false
+      })
+    }).catch(() => {
+      console.log('取消上/下架')
+    })
+  }
+
+  // 結單
+  const cutOffProduct = pid => {
+    console.log("cutOffProduct:", pid)
+    ElMessageBox.confirm(
+      '您確定要結算此商品的訂單?',
+      '結單',
+      {
+        confirmButtonText: '確定結單',
+        cancelButtonText: '取消',
+        type: 'danger',
+      }
+    ).then(() => {
+      storeUtils.loading = true
+
+      let formData = new FormData()
+          formData.append('pid', pid)
+
+      storeProduct.cutOffProduct(formData).then(res => {
+        console.log(res)
+        if(res.code === '0000' && res.result) {
+          console.log('cut off product success')
+        }
+        storeUtils.loading = false
+      })
+    }).catch(() => {
+      console.log('取消結單')
+    })
+  }
+
+  // 複製連結
+  const copyLink = async (pid) => {
+    console.log('複製連結')
+    try {
+      await navigator.clipboard.writeText(`${VUE_APP_WEB_URL}/product/${pid}`);
+      console.log('Content copied to clipboard');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      ElMessage.error('抱歉！無法複製')
+    }
+    // const copyContent = async () => {
+    //   try {
+    //     await navigator.clipboard.writeText(text);
+    //     console.log('Content copied to clipboard');
+    //   } catch (err) {
+    //     console.error('Failed to copy: ', err);
+    //   }
+    // }
+  }
 </script>

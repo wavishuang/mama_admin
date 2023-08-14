@@ -10,6 +10,7 @@
           <slot />
         </div>
       </main>
+
       <Footer />
     </div>
   </div>
@@ -42,7 +43,6 @@
   import { useStoreUser } from '@/stores/storeUser.js'
   const storeUser = useStoreUser()
 
-  console.log(storeUser.user)
   if(!storeUser.isLogin()) {
     localStorage.removeItem('user')
     router.push('/')

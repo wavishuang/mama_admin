@@ -25,10 +25,13 @@ const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+// 預設的 layout
 app.component("default-layout", DashboardLayout);
+// Login & Receive
 app.component("empty-layout", EmptyLayout);
 // Web
 app.component("web-layout", WebLayout);
+// 商品詳情
 app.component("product-layout", ProductLayout);
 
 app

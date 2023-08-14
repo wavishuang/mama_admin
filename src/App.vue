@@ -14,7 +14,7 @@ const { currentRoute } = useRouter()
 
 const layout = computed(() => {
   console.log('layout:', route.path, currentRoute.value.meta.layout)
-  if(route.path === '/') {
+  if(route.path === '/') {  // Login & Receive
     return 'empty-layout'
   } else if(currentRoute.value.meta.layout) {
     return `${currentRoute.value.meta.layout}-layout`

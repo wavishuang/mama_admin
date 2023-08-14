@@ -202,5 +202,4 @@ const logout = () => {
   localStorage.removeItem('user')
 }
 
-
 </script>

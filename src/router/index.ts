@@ -91,7 +91,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   // web
   {
-    path: "/product",
+    path: "/product/:pid",
     name: "Product",
     component: Product,
     meta: { 

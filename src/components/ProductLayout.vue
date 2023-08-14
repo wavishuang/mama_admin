@@ -11,9 +11,7 @@
         </div>
       </main>
 
-      <component :is="footer">
-        <router-view />
-      </component>
+      <component :is="footer" />
     </div>
   </div>
 </template>
@@ -23,30 +21,38 @@
  * imports
  */
   import { computed } from 'vue'
-  import { useRoute } from 'vue-router'
-// import WebSidebar from '@/components/web/WebSidebar.vue'
-import WebHeader from '@/components/web/WebHeader.vue'
-import WebFooter from '@/components/web/WebFooter.vue'
-import ProductFooter from '@/components/web/ProductFooter.vue'
+  import { useRouter } from 'vue-router'
+  // import WebSidebar from '@/components/web/WebSidebar.vue'
+  import WebHeader from '@/components/web/WebHeader.vue'
+  // import WebFooter from '@/components/web/WebFooter.vue'
+  import ProductFooter from '@/components/web/ProductFooter.vue'
 
 /**
- * useStoreUtils
+ * use Route
  */
-  import { useStoreUtils } from '@/stores/storeUtils.js'
+  const router = useRouter()
 
 /**
  * store utils
  */
+  import { useStoreUtils } from '@/stores/storeUtils.js'
+
   const storeUtils = useStoreUtils()
   const loading = computed(() => storeUtils.loading)
 
 /**
  * footer 
  */
-  const route = useRoute()
+  const footer = ProductFooter
 
-  const footer = computed(() => {
-    if(route.path !== '/product') return WebFooter
-    else return ProductFooter 
-  })
+/**
+ * store User
+ */
+  import { useStoreUser } from '@/stores/storeUser.js'
+  const storeUser = useStoreUser()
+
+  if(!storeUser.isLogin()) {
+    localStorage.removeItem('user')
+    router.push('/')
+  }
 </script>

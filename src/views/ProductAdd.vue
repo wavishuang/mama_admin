@@ -114,8 +114,14 @@
  * imports
  */
   import { reactive, onMounted } from 'vue'
+  import { useRouter } from 'vue-router'
   import Breadcrumb from '../partials/Breadcrumb.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
+
+/**
+ * router
+ */
+  const router = useRouter()
 
 /**
  * storeUtils
@@ -153,17 +159,15 @@
  * storeProduct
  */
   import { useStoreProduct } from '../stores/storeProduct.js'
-
   const storeProduct = useStoreProduct()
-  // storeProduct.getAllProduct()
 
   /**
    * submit
    */
   const handleSubmit = async () => {
-    console.log('storeUtils.loading:', storeUtils.loading)
+    // console.log('storeUtils.loading:', storeUtils.loading)
     if(storeUtils.loading) return
-    console.log('is submit 2')
+    // console.log('is submit 2')
     storeUtils.loading = true
     let errorFlag = false
     let alertText = ''
@@ -219,12 +223,13 @@
       formData.append('suggestedPrice', product.suggestedPrice || 0)
       formData.append('sellingPrice', product.sellingPrice || 0)
       formData.append('quantity', product.quantity || 0)
-      formData.append('description', product.description || '')
+      formData.append('description', product.description.replace(/\n/g, "&lt;br /&gt;") || '')
     Array.from(file.value.files).forEach(f => formData.append('files[]', f))
   
     storeProduct.addProduct(formData).then(res => {
       console.log('res:', res)
       storeUtils.loading = false
+      router.push('/product_list')
     })
   }
 
