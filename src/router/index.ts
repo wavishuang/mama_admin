@@ -17,7 +17,7 @@ import ProductAdd from "../views/ProductAdd.vue";
 // web
 import Product from '../views/web/Product.vue';
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: "/",
     name: "Login",
@@ -100,6 +100,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   { path: "/:pathMatch(.*)*", component: NotFound },
 ];
+
+console.log('process.env.BASE_URL:', process.env.BASE_URL)
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
