@@ -23,7 +23,7 @@
   const router = useRouter()
   const route = useRoute()
 
-  const { loading, getLineUserInfo} = useLineLogin()
+  const { loading, getLineUserInfo } = useLineLogin()
 
 /**
  * onMounted
@@ -31,7 +31,11 @@
   onMounted(() => {
     if(!route.query || !route.query.code) router.push('/')
 
-    getLineUserInfo('/product_list')
+    let redirectPage = '/product_list'
+    if(localStorage.redirectPage) {
+      redirectPage = localStorage.redirectPage
+    }
+    getLineUserInfo(redirectPage)
   })
 </script>
 

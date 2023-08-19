@@ -94,6 +94,14 @@ const routes = [
     path: "/product/:pid",
     name: "Product",
     component: Product,
+    // beforeEnter: (to, from) => {
+    //   // if(to.path)
+    //   console.log(to.path)
+    //   if(localStorage.redirectPage === to.path) {
+    //     localStorage.removeItem('redirectPage')
+    //   }
+    //   // return false
+    // },
     meta: { 
       layout: "product",
     },
@@ -113,6 +121,7 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     if(!localStorage.user) {
+      localStorage.redirectPage = to.path
       next({name: 'Login'})
     }
     next()

@@ -29,15 +29,51 @@ export const useStoreProduct = defineStore('storeProduct', {
       info: {},
     }
   },
-  // getters: {
-  //   productLength() {
-  //     return this.all.length
-  //   }
-  // },
+  getters: {
+    allLength() {
+      return this.all.length
+    }
+  },
   actions: {
     // 取得所有商品
     async getAllProduct(form) {
       return axios.post('/Demo/get_all_product', form).then(res => {
+        if(res && res.data && !utils.isEmpty(res.data.result)) {
+          this.all = [...res.data.result.lists]
+          this.total = res.data.result.total
+          this.pageSize = parseInt(res.data.result.pageSize)
+          this.currentPage = parseInt(res.data.result.currentPage)
+        }
+        return res.data
+      })
+    },
+    // 取得團購中的商品 
+    async getProcessingProduct(form) {
+      return axios.post('/Demo/get_processing_product', form).then(res => {
+        if(res && res.data && !utils.isEmpty(res.data.result)) {
+          this.all = [...res.data.result.lists]
+          this.total = res.data.result.total
+          this.pageSize = parseInt(res.data.result.pageSize)
+          this.currentPage = parseInt(res.data.result.currentPage)
+        }
+        return res.data
+      })
+    },
+    // 取得已結單的商品 
+    async getCutOffProduct(form) {
+      return axios.post('/Demo/get_cut_off_product', form).then(res => {
+        if(res && res.data && !utils.isEmpty(res.data.result)) {
+          this.all = [...res.data.result.lists]
+          this.total = res.data.result.total
+          this.pageSize = parseInt(res.data.result.pageSize)
+          this.currentPage = parseInt(res.data.result.currentPage)
+        }
+        return res.data
+      })
+    },
+    // 取得已下架的商品 
+    async getOfflineProduct(form) {
+      return axios.post('/Demo/get_offline_product', form).then(res => {
         if(res && res.data && !utils.isEmpty(res.data.result)) {
           this.all = [...res.data.result.lists]
           this.total = res.data.result.total

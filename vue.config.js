@@ -10,6 +10,12 @@ let webUrl = 'https://www.api.cc94178.com/index.php'
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  pages: {
+    index: {
+      entry: 'src/main.ts',
+      title: '澄品團購'
+    }
+  },
   devServer: {
     // disableHostCheck: true,
     // historyApiFallback: true,

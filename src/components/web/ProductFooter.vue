@@ -1,10 +1,10 @@
 <template>
   <div class="w-full border-t-2 flex justify-between items-stretch">
-    <el-input-number 
+    <!-- <el-input-number 
       v-model="count" 
       :min="1"
       size="large"
-      @change="handleChange" />
+      @change="handleChange" /> -->
 
     <el-button class="flex-1 btn-shopping">
       <el-icon class="mr-2">
