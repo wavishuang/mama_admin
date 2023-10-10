@@ -49,7 +49,9 @@
               <el-button 
                 type="primary" 
                 size="small" 
-                :disabled="scope.row.online == 0 || scope.row.is_cut_off == 1" @click="cutOffProduct(scope.row.pid)"
+                :disabled="scope.row.online == 0 || scope.row.is_cut_off == 1" 
+                @click="cutOffProduct(scope.row.pid)"
+                plain
               >結單</el-button>
               <el-button 
                 type="success" 
@@ -58,6 +60,7 @@
                 v-show="scope.row.online == 0"
                 :disabled="scope.row.is_cut_off == 1"
                 @click="setProductState(scope.row, 1)"
+                plain
               >上架</el-button>
               <el-button 
                 type="danger" 
@@ -66,6 +69,7 @@
                 v-show="scope.row.online == 1"
                 :disabled="scope.row.is_cut_off == 1"
                 @click="setProductState(scope.row, 0)"
+                plain
               >下架</el-button>
             </div>
           </template>

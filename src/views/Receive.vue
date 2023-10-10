@@ -38,4 +38,3 @@
     getLineUserInfo(redirectPage)
   })
 </script>
-

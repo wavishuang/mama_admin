@@ -62,7 +62,9 @@
               <el-button 
                 type="primary" 
                 size="small" 
-                :disabled="scope.row.online == 0 || scope.row.is_cut_off == 1" @click="cutOffProduct(scope.row.pid)"
+                :disabled="scope.row.online == 0 || scope.row.is_cut_off == 1" 
+                @click="cutOffProduct(scope.row.pid)"
+                plain
               >結單</el-button>
               <el-button 
                 type="success" 
@@ -71,6 +73,7 @@
                 v-show="scope.row.online == 0"
                 :disabled="scope.row.is_cut_off == 1"
                 @click="setProductState(scope.row, 1)"
+                plain
               >上架</el-button>
               <el-button 
                 type="danger" 
@@ -79,6 +82,7 @@
                 v-show="scope.row.online == 1"
                 :disabled="scope.row.is_cut_off == 1"
                 @click="setProductState(scope.row, 0)"
+                plain
               >下架</el-button>
             </div>
             <div v-if="scope.row.online == 0 || scope.row.is_cut_off == 1">
@@ -257,7 +261,7 @@ import { VUE_APP_WEB_URL, VUE_APP_IMG_CDN } from '@/config/line.js'
   const copyLink = async (pid) => {
     console.log('複製連結')
     try {
-      await navigator.clipboard.writeText(`${VUE_APP_WEB_URL}/product/${pid}`);
+      await navigator.clipboard.writeText(`${VUE_APP_WEB_URL}/index.php/Addone/product/${pid}`);
       console.log('Content copied to clipboard');
     } catch (err) {
       console.error('Failed to copy: ', err);

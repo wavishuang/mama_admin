@@ -2,7 +2,7 @@ import axios from 'axios'
 import Qs from 'qs'
 import jwtDecode from 'jwt-decode'
 
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { VUE_APP_LINE_CHANNEL_ID, VUE_APP_LINE_REDIRECT_URL, VUE_APP_LINE_CHANNEL_SECRET } from '@/config/line.js'
 import { useStoreUser } from '@/stores/storeUser.js'
@@ -51,6 +51,7 @@ export function useLineLogin() {
     axios.get(`https://api.line.me/oauth2/v2.1/verify?access_token=${user.access_token}`).then(res => {
       if(res.data && res.data.client_id && res.data.client_id == VUE_APP_LINE_CHANNEL_ID && res.data.expires_in > 0) {
         storeUser.user = {...JSON.parse(localStorage.user)}
+        nextTick()
         router.push(routerPath)
       }
     }).catch(() => {
